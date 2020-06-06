@@ -1,0 +1,16 @@
+{
+  "name": "twitter-analysis-heroku",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node backend/server.js",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.9.18",
+    "sentiment": "^5.0.2",
+    "twitter": "^1.7.1"
+  },
+  "private": true
+}
