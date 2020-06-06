@@ -10,7 +10,7 @@ const twitterAnalysis = mongoose.model("twitter-analysis", new Schema({
 }));
 
 class AnalysisDatabase {
-    //url = process.env.MONGODB || "mongodb://localhost:27017/twitter-analysis-project";
+    // url of atlas cluster
     url = `mongodb+srv://wf858:${process.env.ATLAS_CLUSTER_PASSWORD}@twitter-analysis-bfokr.mongodb.net/twitter-analysis?retryWrites=true&w=majority`
 
     // connects to database
