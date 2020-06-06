@@ -11,7 +11,7 @@ const twitterAnalysis = mongoose.model("twitter-analysis", new Schema({
 
 class AnalysisDatabase {
     // url of atlas cluster
-    url = `mongodb+srv://wf858:${process.env.ATLAS_CLUSTER_PASSWORD}@twitter-analysis-bfokr.mongodb.net/twitter-analysis?retryWrites=true&w=majority`
+    url = process.env.CLUSTER_TWITTER_URI;
 
     // connects to database
     async start() {
