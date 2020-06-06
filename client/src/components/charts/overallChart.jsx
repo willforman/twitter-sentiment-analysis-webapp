@@ -45,7 +45,8 @@ class AnalysisChart extends Component {
                         {
                             data,
                             borderColor: "rgb(33, 150, 243)",
-                            backgroundColor: "rgb(33, 150, 243, 0.25)"
+                            backgroundColor: "rgb(33, 150, 243, 0.25)",
+                            pointHitRadius: 10,
                         }
                     ]
                 },
@@ -66,9 +67,10 @@ class AnalysisChart extends Component {
                         yAxes: [{
                             scaleLabel: {
                                 display: true,
-                                labelString: "Positive Tweets"
+                                labelString: "Pos. Tweets Percent"
                             },
                             ticks: {
+                                precision: 0,
                                 callback: (value, index, values) => {
                                     return value + "%";
                                 }
@@ -98,7 +100,8 @@ class AnalysisChart extends Component {
                 data.forEach( (entry) => {
                     const {created} = entry;
                     const formattedCreated = moment(created)
-                    .format("MMMM Do YYYY, h:mm a");
+                    //.format("MMMM Do YYYY, h:mm a");
+                    .format("MMMM Do[,] h a")
                     entry.created = formattedCreated;
                 });
 

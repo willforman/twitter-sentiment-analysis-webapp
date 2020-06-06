@@ -7,7 +7,20 @@ class SearchChart extends Component {
     componentDidMount() {
         const {analysis} = this.props;
         const chartRef = this.chartRef.current.getContext("2d");
-        
+
+        let chartString = "";
+        if (analysis.tweetTotal === 100) {
+            chartString = `Last 100 tweets`
+        }
+        else {
+            if (analysis.tweetTotal === 1) {
+                chartString = `1 tweet in the last 7 days`
+            }
+            else {
+                chartString = `${analysis.tweetTotal} tweets in the last 7 days`
+            }
+        }
+
         this.chart = new Chart(chartRef, {
             type: "pie",
             data: {
@@ -26,7 +39,10 @@ class SearchChart extends Component {
             options: {
                 title: {
                     display: true,
-                    text: `Last 100 tweets queried with ${this.props.searchTerm}`,
+                    text: `${chartString} queried with ${analysis.searchTerm}`,
+                },
+                legend: {
+                    display: false
                 }
             }
         });

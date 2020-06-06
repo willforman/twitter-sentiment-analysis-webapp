@@ -10,7 +10,7 @@ class SearchResults extends Component {
     }
     
     render() {
-        const {analysis, searchTerm} = this.props;
+        const {analysis} = this.props;
         
         // only renders search results if theres an analysis
         // to show
@@ -21,6 +21,16 @@ class SearchResults extends Component {
                         Search for a phrase to determine what Twitter thinks of it.
                     </span>
                 </CardPanel>
+            );
+        }
+
+        if (analysis.tweetTotal === 0) {
+            return (
+              <CardPanel className="hoverable blue">
+                  <span className="white-text">
+                      No tweets were found.
+                  </span>
+              </CardPanel>  
             );
         }
 
@@ -46,11 +56,11 @@ class SearchResults extends Component {
             <div>
                 <CardPanel className={cardClass}>
                     <span className="white-text">
-                        Twitter feels <strong>{analysisResult}</strong> about tweets including <strong>"{searchTerm}"</strong>.
+                        Twitter feels <strong>{analysisResult}</strong> about tweets including <strong>"{analysis.searchTerm}"</strong>.
                     </span>
                 </CardPanel>
 
-                <Chart analysis={analysis} searchTerm={searchTerm} key={searchTerm} />
+                <Chart analysis={analysis} key={analysis.searchTerm} />
 
                 <Collapsible>
                     <CollapsibleItem

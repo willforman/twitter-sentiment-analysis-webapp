@@ -11,7 +11,7 @@ class SearchBar extends Component {
 
         return (
             <div className="row">
-                <h2 className="center-align">Twitter Sentiment Analysis Search</h2>
+                <h3 className="center-align">Search</h3>
 
                 <div className="row">
                     <form>

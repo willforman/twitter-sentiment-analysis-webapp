@@ -7,11 +7,15 @@ export default class NavBar extends Component {
     M.AutoInit();
   }  
   
-  render() { 
+  render() {
+    const brandStyle = {
+      fontSize: "4vmin"
+    };
+    
         return ( 
           <nav>
             <div className="nav-wrapper blue">
-              <span className="brand-logo right">Sentiment Analysis</span>
+              <span className="brand-logo right" style={brandStyle}>Twitter Sentiment Analysis</span>
               <a href="" data-target="mobile-demo" className="sidenav-trigger"><i className="material-icons">menu</i></a>
               <ul id="nav-mobile" className="left hide-on-med-and-down">
                 <li className="waves-effect"><Link to ="/">Search</Link></li>

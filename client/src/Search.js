@@ -38,7 +38,6 @@ class Search extends Component {
                     onChange={this.handleChange}
                 />
                 <SearchResults
-                    searchTerm={this.state.searchTerm}
                     analysis={this.state.analysis}
                 />
             </React.Fragment>

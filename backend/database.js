@@ -15,7 +15,6 @@ class AnalysisDatabase {
 
     // connects to database
     async start() {
-        console.log(this.url);
         mongoose.connect(this.url, {
             useNewUrlParser: true,
             useUnifiedTopology: true 

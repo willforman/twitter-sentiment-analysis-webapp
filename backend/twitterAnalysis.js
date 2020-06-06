@@ -21,7 +21,6 @@ class TwitterSentAnalysis {
         // info to return to the server
         const analysis = {
             searchTerm,
-            searchCount,
             posTweetsCount: 0,
             negTweetsCount: 0,
             ntrlTweetsCount: 0,
@@ -76,6 +75,8 @@ class TwitterSentAnalysis {
                             analysis.ntrlTweetsCount++;
                         }
                     });
+                    analysis.tweetTotal = analysis.posTweetsCount + analysis.negTweetsCount + analysis.ntrlTweetsCount;
+
                     resolve(analysis);
                 }
             });

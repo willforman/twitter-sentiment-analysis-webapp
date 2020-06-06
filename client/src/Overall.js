@@ -14,7 +14,7 @@ class ChartScreen extends Component {
     render() { 
         return ( 
             <div className="row">
-                <h2 className="center-align">Overall Twitter Sentiment</h2>
+                <h3 className="center-align">Overall Sentiment</h3>
                 <Chart
                     onPointClick={this.handlePointClicked}
                 />
