@@ -6,6 +6,7 @@ class GithubLink extends Component {
             marginLeft: "auto",
             marginRight: "auto",
             display: "block",
+            marginBottom: "100px"
         };
         return ( 
             <a 

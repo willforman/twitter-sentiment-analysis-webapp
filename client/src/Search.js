@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios";
 import SearchBar from "./components/searchbar";
-import SearchResults from "./components/searchResults";
+import SearchResultsWithPlaceholder from "./components/searchResultsPlaceholder";
 
 class Search extends Component {
     state = {
@@ -37,7 +37,7 @@ class Search extends Component {
                     onSearch={this.handleSearch}
                     onChange={this.handleChange}
                 />
-                <SearchResults
+                <SearchResultsWithPlaceholder
                     analysis={this.state.analysis}
                 />
             </React.Fragment>

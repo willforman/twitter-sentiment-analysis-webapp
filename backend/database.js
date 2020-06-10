@@ -1,21 +1,39 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const twitterAnalysis = mongoose.model("twitter-analysis", new Schema({
+const searchSchema = new Schema({
+    searchTerm: String,
+    posTweetsCount: Number,
+    negTweetsCount: Number,
+    ntrlTweetsCount: Number,
+    tweetTotal: Number,
+    mostPosTweet: {
+        score: Number,
+        text: String,
+    },
+    mostNegTweet: {
+        score: Number,
+        text: String,
+    }
+});
+
+const SearchAnalysis = mongoose.model("Search-Analysis", searchSchema);
+
+const TwitterAnalysis = mongoose.model("Twitter-Analyses", new Schema({
     created: Date,
     posTweetCount: Number,
     negTweetCount: Number,
     totalTweetCount: Number,
-    trends: [String],
+    trendsAnalyses: [searchSchema],
 }));
 
 class AnalysisDatabase {
     // url of atlas cluster
-    url = process.env.CLUSTER_TWITTER_URI;
+    uri = process.env.CLUSTER_TWITTER_URI;
 
     // connects to database
     async start() {
-        mongoose.connect(this.url, {
+        mongoose.connect(this.uri, {
             useNewUrlParser: true,
             useUnifiedTopology: true 
         })
@@ -39,7 +57,7 @@ class AnalysisDatabase {
             const weekAgo = getWeekAgo();
 
             // queries for those with date greater than date of a week ago
-            twitterAnalysis.find( {created: { "$gte": weekAgo }}, (err, entries) => {
+            TwitterAnalysis.find( {created: { "$gte": weekAgo }}, (err, entries) => {
                 if (err) reject(err);
                 resolve(entries);
             });
@@ -47,18 +65,34 @@ class AnalysisDatabase {
     }
 
     // adds analyses to database
-    addAnalysis(analysis, created) {
+    addAnalysis(overallAnalysis, created) {
         return new Promise( (resolve, reject) => {
-            const entry = new twitterAnalysis({
+            const {trends} = overallAnalysis;
+
+            // turns array of analyses to SearchAnalysis Schemas
+            const analysesTrendingSchemas = trends.map( (analysis) => {
+                const {searchTerm, posTweetsCount, negTweetsCount, ntrlTweetsCount, mostPosTweet, mostNegTweet, tweetTotal} = analysis;
+                return new SearchAnalysis({
+                    searchTerm,
+                    posTweetsCount,
+                    negTweetsCount,
+                    ntrlTweetsCount,
+                    mostPosTweet,
+                    mostNegTweet,
+                    tweetTotal
+                });
+            });
+            
+            const entry = new TwitterAnalysis({
                 created,
-                posTweetCount: analysis.posTweetCount,
-                negTweetCount: analysis.negTweetCount,
-                totalTweetCount: analysis.totalTweetCount,
-                trends: analysis.trends,
+                posTweetCount: overallAnalysis.posTweetCount,
+                negTweetCount: overallAnalysis.negTweetCount,
+                totalTweetCount: overallAnalysis.totalTweetCount,
+                trendsAnalyses: analysesTrendingSchemas
             });
 
             entry.save( (err, entry) => {
-                if (err) reject(error);
+                if (err) reject(err);
                 resolve();
             });
         });

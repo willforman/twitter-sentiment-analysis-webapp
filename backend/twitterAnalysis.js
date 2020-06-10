@@ -114,15 +114,21 @@ class TwitterSentAnalysis {
                         stream.destroy();
                         
                         // gets top 8 trending terms at this time
-                        twitterClient.get("trends/place", { id: 2379574}, (error, trends) => {
+                        twitterClient.get("trends/place", { id: 2379574}, async (error, trendsGiven) => {
                             if (error) reject(error);
 
-                            // converts response from API to array of just strings
-                            let result = trends[0].trends.map( (trend) => trend.name);
-                            // only keeps the first 10 of these
-                            result = result.filter( (trend, index) => {
-                                return index < 8;
-                            });
+                            const result = [];
+
+                            // looks weird but is how object given from twitter API is structured
+                            const trends = trendsGiven[0].trends;
+
+                            // gets the top 8 trends at this time, analyzes them, and saves in the db
+                            for (let i= 0; i < 8; i++) {
+                                const trend = trends[i];
+                                
+                                const analysis = await this.analyzeSearch(trend.name);
+                                result.push(analysis);
+                            }
 
                             // adds to returning object and returns it
                             tweets.trends = result;

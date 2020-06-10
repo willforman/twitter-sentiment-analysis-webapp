@@ -11,24 +11,14 @@ class SearchResults extends Component {
     
     render() {
         const {analysis} = this.props;
-        
-        // only renders search results if theres an analysis
-        // to show
-        if (Object.keys(analysis).length === 0) { // check if object is empty
-            return (
-                <CardPanel className="hoverable blue">
-                    <span className="white-text">
-                        Search for a phrase to determine what Twitter thinks of it.
-                    </span>
-                </CardPanel>
-            );
-        }
+
+        if (Object.keys(analysis).length === 0) return null;
 
         if (analysis.tweetTotal === 0) {
             return (
               <CardPanel className="hoverable blue">
                   <span className="white-text">
-                      No tweets were found.
+                      No tweets including <strong>{analysis.searchTerm}</strong> were found.
                   </span>
               </CardPanel>  
             );

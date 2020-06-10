@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardPanel, Collection, CollectionItem } from 'react-materialize';
+import { Card, CardPanel, Collection, CollectionItem, Table, thead } from 'react-materialize';
 
 export default class TrendingCard extends Component {
     render() {
@@ -15,6 +15,7 @@ export default class TrendingCard extends Component {
             );
         }
 
+        const {onItemClicked} = this.props;
         
         return ( 
             <Card
@@ -25,16 +26,27 @@ export default class TrendingCard extends Component {
                 <h5>
                     {analysis.created}
                 </h5>
-                <Collection header="Trending:" className="black-text">
-                    <CollectionItem>1. {analysis.trends[0]}</CollectionItem>
-                    <CollectionItem>2. {analysis.trends[1]}</CollectionItem>
-                    <CollectionItem>3. {analysis.trends[2]}</CollectionItem>
-                    <CollectionItem>4. {analysis.trends[3]}</CollectionItem>
-                    <CollectionItem>5. {analysis.trends[4]}</CollectionItem>
-                    <CollectionItem>6. {analysis.trends[5]}</CollectionItem>
-                    <CollectionItem>7. {analysis.trends[6]}</CollectionItem>
-                    <CollectionItem>8. {analysis.trends[7]}</CollectionItem>
-                </Collection>
+                
+                <Table className="white black-text">
+                    <thead>
+                        <tr>
+                            <th data-field ="searchTerm">Search Term</th>
+                            <th data-field ="percPos">Pos. Tweets %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {analysis.trendsAnalyses.map( (trend, index) => {
+                            const percPos = (trend.posTweetsCount / (trend.negTweetsCount + trend.posTweetsCount) * 100).toFixed(0);
+                            const textColor = percPos > 50 ? "green-text" : "red-text";
+                            return <tr key={index} onClick={(event) => onItemClicked(index, event)}>
+                                <td>{trend.searchTerm}</td>
+                                <td className={textColor}>{percPos}%</td>
+                            </tr>
+                        })}
+                    </tbody>
+                </Table>
+                <p>Click on an item to see it's analysis.</p>
+
             </div>
             </Card>
         );
