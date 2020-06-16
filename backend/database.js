@@ -28,7 +28,7 @@ const TwitterAnalysis = mongoose.model("Twitter-Analyses", new Schema({
 }));
 
 class AnalysisDatabase {
-    // url of atlas cluster
+    // uri of atlas cluster
     uri = process.env.CLUSTER_TWITTER_URI;
 
     // connects to database
@@ -44,20 +44,21 @@ class AnalysisDatabase {
         });
     }
 
-    // gets analyses from the last week
-    getAnalyses() {
-        // this function gets date of a week ago
-        function getWeekAgo() {
+    // gets analyses from the last 2 or 5 days depending on if mobile
+    getAnalyses(isMobile) {
+        const daysAgo = isMobile === "true" ? 2 : 5;
+        const dateDaysAgo = getDateDaysAgo(daysAgo);
+
+        // gets date of how many days ago were passed to function
+        function getDateDaysAgo(daysAgo) {
             const date = new Date();
-            date.setDate( date.getDay() - 7 );
+            date.setDate( date.getDate() - daysAgo );
             return date;
         }
 
         return new Promise( (resolve, reject) => {
-            const weekAgo = getWeekAgo();
-
-            // queries for those with date greater than date of a week ago
-            TwitterAnalysis.find( {created: { "$gte": weekAgo }}, (err, entries) => {
+            // queries for those with date greater than date of 2/5 days ago
+            TwitterAnalysis.find( {created: { "$gte": dateDaysAgo }}, (err, entries) => {
                 if (err) reject(err);
                 resolve(entries);
             });

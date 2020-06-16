@@ -93,14 +93,17 @@ class AnalysisChart extends Component {
 
     setData = () => {
         return new Promise((resolve, reject) => {
-            axios.get("/data")
+            axios.get("/data", {
+                params: {
+                    isMobile: this.props.isMobile
+                }
+            })
             .then( (response) => {
                 const {data} = response;
 
                 data.forEach( (entry) => {
                     const {created} = entry;
                     const formattedCreated = moment(created)
-                    //.format("MMMM Do YYYY, h:mm a");
                     .format("MMMM Do[,] h a")
                     entry.created = formattedCreated;
                 });

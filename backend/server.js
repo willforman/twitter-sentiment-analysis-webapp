@@ -33,8 +33,10 @@ app.get("/search", async (req, res) => {
 
 // called when client looks at chart
 app.get("/data", async (req, res) => {
+    const {isMobile} = req.query;
+
     try {
-        const analysis = await database.getAnalyses();
+        const analysis = await database.getAnalyses(isMobile);
         res.json(analysis);
     } catch (error) {
         console.error(error);

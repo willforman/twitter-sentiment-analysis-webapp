@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardPanel, Collection, CollectionItem, Table, thead } from 'react-materialize';
+import { Card, CardPanel, Table } from 'react-materialize';
 
 export default class TrendingCard extends Component {
     render() {
@@ -26,7 +26,8 @@ export default class TrendingCard extends Component {
                 <h5>
                     {analysis.created}
                 </h5>
-                
+                <h6>Click on an item to see it's analysis.</h6>
+
                 <Table className="white black-text">
                     <thead>
                         <tr>
@@ -34,7 +35,7 @@ export default class TrendingCard extends Component {
                             <th data-field ="percPos">Pos. Tweets %</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody>   
                         {analysis.trendsAnalyses.map( (trend, index) => {
                             const percPos = (trend.posTweetsCount / (trend.negTweetsCount + trend.posTweetsCount) * 100).toFixed(0);
                             const textColor = percPos > 50 ? "green-text" : "red-text";
@@ -45,7 +46,7 @@ export default class TrendingCard extends Component {
                         })}
                     </tbody>
                 </Table>
-                <p>Click on an item to see it's analysis.</p>
+                
 
             </div>
             </Card>
