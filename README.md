@@ -1,5 +1,5 @@
 # Twitter Sentiment Analysis  
-This web app performs sentiment analysis on Twitter.
+This web app performs sentiment analysis on Twitter. The two features are search and the overall sentiment chart.
 
 ## Search
 User can search for a phrase, and see a chart of the sentiment of the last 100 tweets with this phrase.
@@ -20,5 +20,5 @@ Every hour on the hour, the server queries for 1000 random tweets from the US. T
 * Node.js
 * express
 * mongoose for MongoDB
-* sentiment
-* twitter
+* sentiment - sentiment analysis library in npm
+* twitter - Javascript wrapper for Twitter API, npm library
