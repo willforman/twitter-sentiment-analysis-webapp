@@ -7,7 +7,7 @@
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mongoose": "^5.9.18",
     "sentiment": "^5.0.2",
     "twitter": "^1.7.1"
